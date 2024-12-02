@@ -1,4 +1,5 @@
-$lines = Get-Content ..\input.txt
+Set-Location -Path $PSScriptRoot
+$lines = Get-Content "../input.txt"
 
 function Get-Distance{
 
@@ -49,9 +50,9 @@ function Process-Lines {
 
         }
 
-    }
+        return $processedLines
 
-    end{$processedLines}
+    }
 
 }
 
