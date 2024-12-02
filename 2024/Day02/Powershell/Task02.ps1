@@ -43,7 +43,7 @@ function Calculate-Safety {
             
             ###Edge cases
             if($i -eq 1){$newLine = ($lineSplit[1..($lineSplit.Count -1)]) -join " "}
-            elseif($i -eq ($lineSplit.Count -1)){($newLine = $lineSplit[0..($lineSplit.Count -2)]) -join " "}
+            elseif($i -eq ($lineSplit.Count -1)){$newLine = ($lineSplit[0..($lineSplit.Count -2)]) -join " "}
             else{
 
                 $startSlice = 0..($i-1)
@@ -57,9 +57,10 @@ function Calculate-Safety {
         }
 
         if($errorCount -gt 1){return $false}
-        return $true
-
+        
     }
+
+    return $true
 
 }
 
