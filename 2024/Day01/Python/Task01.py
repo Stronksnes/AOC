@@ -34,5 +34,4 @@ for line in processedLines:
     print(line)
 
 print(listDistances)
-
 print(sum(listDistances))
