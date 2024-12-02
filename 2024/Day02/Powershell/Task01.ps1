@@ -46,7 +46,7 @@ function Calculate-Safety {
 $safetyReports = foreach($line in $lines){
 
     [PSCustomObject]@{
-        
+
         Report  = $line
         Safe    = Calculate-Safety -line $line
 
