@@ -1,5 +1,6 @@
 Set-Location -Path $PSScriptRoot 
 $lines = Get-Content "../input.txt"
+<<<<<<< HEAD
 $lines = $lines -join ""
 
 $mulPattern = 'mul\((?<first>\d+),(?<second>\d+)\)'
@@ -16,3 +17,5 @@ $muled = foreach($mul in $mulMatches){
 }
 
 ($muled | Measure-Object -Sum).Sum
+=======
+>>>>>>> d72063cf84dc339d99cf19c317c913b793a061bf
