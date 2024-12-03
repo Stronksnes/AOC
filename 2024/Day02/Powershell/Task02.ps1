@@ -1,11 +1,13 @@
 Set-Location -Path $PSScriptRoot 
-$lines = Get-Content "../input.txt"
+#$lines = Get-Content "../input.txt"
+$lines = Get-Content "../edgecase.txt"
 
 function Calculate-Safety {
     param (
         $line,
         $errorCount = 0,
-        $strike = 0
+        $strike = 0,
+        $direction
     )
 
     $lineSplit = $line.Split(" ")
@@ -23,22 +25,32 @@ function Calculate-Safety {
 
         $compare = $current - $previous
 
+        Write-host "CurrentLine: $line"
+        Write-Host "Previous: $previous"
+        Write-Host "Current: $current"
+
+
+
         switch ($compare) {
 
             {$_ -gt 0}  {$entryDirection = "increasing"}
             {$_ -lt 0}  {$entryDirection = "decreasing"}
-            default     {$errorCount++}
+
         }
 
         if($entryDirection -ne $initDirection){$errorCount++}
         
-        switch (($previous..$current).Count -1) {
+        else{
 
-            {$_ -gt 3}  {$errorCount++}
-            {$_ -lt 1}  {$errorCount++}
+            switch (($previous..$current).Count -1) {
 
-        }
+                {$_ -gt 3}  {$errorCount++}
+                {$_ -lt 1}  {$errorCount++}
+
+            }
         
+        }
+
         if(($errorCount -eq 1) -and ($strike -eq 0)){
             
             ###Edge cases
@@ -64,7 +76,7 @@ function Calculate-Safety {
 
 }
 
-$safetyReports = foreach($line in $lines){
+$safetyReports = foreach($line in $lines[0]){
 
     [PSCustomObject]@{
         
