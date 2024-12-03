@@ -74,6 +74,8 @@ function New-SafetyCalculation {
     elseif($decCount -gt $incCount){$dominantGroup = "decreasing"}
     else{$dominantGroup = "EvenSteven"}
 
+    Write-Output "Dominant Group: $dominantGroup"
+
     for ($i = 0; $i -lt $SafetyReport.Count; $i++) {
 
         if(($SafetyReport[$i]).GT3){$errorCount++}
@@ -83,6 +85,8 @@ function New-SafetyCalculation {
             if(($SafetyReport[$i]).Direction -ne $dominantGroup){$errorCount++}
 
         }
+
+        Write-Output "Index: $i, Error Count: $errorCount"
 
         if($errorCount -gt 0){
 
@@ -97,15 +101,6 @@ function New-SafetyCalculation {
 
                 }
 
-                <#
-                elseif(($SafetyReport[$i]).Direction -ne $dominantGroup){
-
-                    $newLine = ($SafetyReport | where {$_.ID -ne ($SafetyReport[$i]).ID}).Number -join " "
-                    return New-SafetyCalculation -line $newLine -strike 1
-
-                }
-                #>
-                
                 else{
 
                     $newLine = ($SafetyReport | where {$_.ID -ne ($SafetyReport[($i -1)]).ID}).Number -join " "
