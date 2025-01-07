@@ -47,35 +47,67 @@ function Move-FileBlocks {
     param (
         $array
     )
-    
-    for ($i = 0; $i -lt $array.Count; $i++) {
-       
-        if($array[$i] -eq "."){
 
-            for ($j = ($array.Count - 1); $j -ge $i; $j--) {
-                
-                if($array[$j] -ne "."){
+    for ($j = ($array.Count - 1); $j -ge $i; $j--) {
 
-                    Write-Host ("Moving fileblock: {0}, at: {1} to: {0} " -f $array[$j], $j, $i)
-                    Write-Host ("Setting index: {0} to ." -f $j)
+        $fileblock = $null
 
-                    $array[$i] = $array[$j]
-                    $array[$j] = "."
+        if($array[$j] -eq "."){
+
+            $zSpaceCounter = 0
+            $zSpaceIndexes = $null
+
+            for ($z = $j; $z -ge $j; $z--) {
+
+                if($array[$z] -ne "."){
+
+                    $zSpaceCounter++
+                    $zSpaceIndexes += [string]$z
+
+                }
+
+            }
+
+            $fileblock = $array | where {$_ -eq $array[$j]}
+            $fileblockLength = $fileblock.Count
+            $fit = $false
+
+            for ($i = 0; $i -lt $array.Count; $i++) {
+            
+                if($fit -eq $true){
+
+
 
                     break
 
                 }
-                
+
+                if($array[$i] -eq "."){
+
+                    $xSpaceCounter = 0
+                    $xSpaceIndexes = $null
+                    for ($x = $i; $x -lt $array.Count; $x++) {
+                     
+                        if($array[$x] -eq "."){
+
+                            $xSpaceCounter++
+                            $xSpaceIndexes += [string]$x
+
+                            if($xSpaceCounter -eq $fileblockLength){$fit = $true; break}
+
+                        }
+
+                    }
+
+                }
+
             }
 
         }
-        
+
     }
 
-    return $array
-
 }
-
 function Calculate-Checksum {
     param (
         $array
